@@ -19,10 +19,27 @@ The page location:
 
 ## Points of interest in the code
 
+#### Making a network call via the SDK inside a change event
+We make a network call inside of the `onValueChange` of another field in [src/components/Field.tsx:39](https://github.com/davidfateh/ctfl-open-graph/blob/main/src/components/Field.tsx#L39)
 
+#### Making multiple network calls on the page location
+In order to collate data from reference, we make two network calls in [src/components/Page.tsx:98](https://github.com/davidfateh/ctfl-open-graph/blob/main/src/components/Page.tsx#L98).
+This is done in a `Promise.all` and once resolved, will be used by the render method.
+
+#### Using the URL on a page location to inject data
+The `Button` component in the field to preview an Open Graph entry uses
+[`sdk.navigator`](https://www.contentful.com/developers/docs/extensibility/app-framework/sdk/#navigator)
+to open a page location while injecting the `path`. In our case, we inject the entry ID on
+[src/components/Field.tsx:56](https://github.com/davidfateh/ctfl-open-graph/blob/main/src/components/Field.tsx#L56)
+and read that information to make more network calls in the page location at
+[src/components/Page.tsx:88](https://github.com/davidfateh/ctfl-open-graph/blob/main/src/components/Page.tsx#L88)
+by using `sdk.parameters.invocation.path`.
+
+
+## Developing and extending this project
 This project was bootstrapped with [Create Contentful App](https://github.com/contentful/create-contentful-app).
 
-## Available Scripts
+### Available Scripts
 
 In the project directory, you can run:
 

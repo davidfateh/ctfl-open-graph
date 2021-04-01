@@ -18,6 +18,7 @@ interface PageProps {
     sdk: PageExtensionSDK;
 }
 
+// An open graph content type
 interface OpenGraphEntry {
     fields: {
         title: {
@@ -49,7 +50,8 @@ interface OpenGraphEntry {
     };
 }
 
-interface Entry {
+// A custom shape for the entry we are going to render in our UI
+interface OpenGraphPreview {
     id: string;
     title: string;
     imageUrl: string;
@@ -78,7 +80,7 @@ interface Asset {
 const Page = (props: PageProps) => {
     // false indicates an error occurred
     // otherwise the entry is loading or loaded
-    const [entry, setEntry] = useState<Entry | false>();
+    const [entry, setEntry] = useState<OpenGraphPreview | false>();
 
     useEffect(() => {
         // Get the entry ID which is passed in via the URL

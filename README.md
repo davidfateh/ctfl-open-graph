@@ -17,6 +17,9 @@ The page location:
 
 ![Open Graph Page Location](./assets/og-page.png)
 
+## Points of interest in the code
+
+
 This project was bootstrapped with [Create Contentful App](https://github.com/contentful/create-contentful-app).
 
 ## Available Scripts

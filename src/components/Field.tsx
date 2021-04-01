@@ -6,7 +6,7 @@ import { FieldExtensionSDK } from '@contentful/app-sdk';
 interface FieldProps {
   sdk: FieldExtensionSDK;
 }
-
+// Custom type to denote a blog post content type
 interface BlogPost {
   sys: {
     id: string;
@@ -20,17 +20,22 @@ interface BlogPost {
 };
 
 const Field = (props: FieldProps) => {
+  // Get the title of the field and create a setter
   const [title, setTitle] = useState(props.sdk.field.getValue() || null);
 
   useEffect(() => {
+    // Resize the field so it isn't cut off in the UI
     props.sdk.window.startAutoResizer();
 
+    // when the value of the `content` field changes, set the title
     props.sdk.entry.fields.content.onValueChanged((entry) => {
       if (!entry) {
         setTitle(null);
         return;
       }
 
+      // The content field is a reference to a blog post.
+      // We want to grab that full entry to get the `title` of it
       props.sdk.space.getEntry<BlogPost>(entry.sys.id).then((data) => {
         if (data.fields.title['en-US'] !== title) {
           const title = data.fields.title['en-US'];

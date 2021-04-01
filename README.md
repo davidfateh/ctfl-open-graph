@@ -17,7 +17,7 @@ The page location:
 
 ![Open Graph Page Location](./assets/og-page.png)
 
-## Points of interest in the code
+## Understanding how multiple locations communicate with each other
 
 #### Making a network call via the SDK inside a change event
 We make a network call inside of the `onValueChange` of another field in [src/components/Field.tsx:39](https://github.com/davidfateh/ctfl-open-graph/blob/main/src/components/Field.tsx#L39)

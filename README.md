@@ -1,3 +1,22 @@
+# Open Graph Preview
+
+The Open Graph Preview App for Contentful provides a visualization of an open graph content type.
+This app is mainly used for demonstration purposes to show how we can link together 
+[app locations](https://www.contentful.com/developers/docs/extensibility/app-framework/locations/)
+within the App Framework to provide a cohesive experience for users.
+
+This app extends a short text field, uses data from a reference field, and combines data
+to visualize it in a page location.
+
+The field:
+
+![Open Graph Content Type Field](./assets/og-field.png)
+
+
+The page location:
+
+![Open Graph Page Location](./assets/og-page.png)
+
 This project was bootstrapped with [Create Contentful App](https://github.com/contentful/create-contentful-app).
 
 ## Available Scripts

@@ -7,6 +7,9 @@ import {
     Typography,
     TextLink,
     Button,
+    SkeletonBodyText,
+    SkeletonContainer,
+    SkeletonDisplayText,
 } from '@contentful/forma-36-react-components';
 import tokens from '@contentful/forma-36-tokens';
 import { PageExtensionSDK } from '@contentful/app-sdk';
@@ -73,6 +76,8 @@ interface Asset {
 }
 
 const Page = (props: PageProps) => {
+    // false indicates an error occurred
+    // otherwise the entry is loading or loaded
     const [entry, setEntry] = useState<Entry | false>();
 
     useEffect(() => {
@@ -98,6 +103,7 @@ const Page = (props: PageProps) => {
                     data.fields.content['en-US'].sys.id
                 ),
             ]).then(([asset, content]) => {
+                // combine the data from the two `space` calls
                 setEntry({
                     title: data.fields.title['en-US'],
                     imageUrl: asset.fields.file['en-US'].url,
@@ -113,10 +119,6 @@ const Page = (props: PageProps) => {
         return <Note noteType="negative">Error retrieving entry!</Note>;
     }
 
-    if (!entry) {
-        return null;
-    }
-
     return (
         <div
             style={{
@@ -129,27 +131,44 @@ const Page = (props: PageProps) => {
             }}
         >
             <div style={{ justifyContent: 'center' }}>
-                <Card>
+                <SkeletonContainer>
+                    <SkeletonDisplayText numberOfLines={1} />
+                    <SkeletonBodyText numberOfLines={3} offsetTop={35} />
+                </SkeletonContainer>
+            </div>
+            <Typography>
+                <Heading>
+                    Open Graph Preview
+                </Heading>
+            </Typography>
+            <Card style={{ width: '260px' }}>
+                {!entry ?
+                <SkeletonContainer>
+                    <SkeletonDisplayText numberOfLines={1} />
+                    <SkeletonBodyText numberOfLines={3} offsetTop={35} />
+                </SkeletonContainer> : 
+                <>
                     <Typography>
-                        <Heading>
-                            <TextLink href={entry.url}>{entry.title}</TextLink>
-                        </Heading>
+                        <TextLink href={entry.url}>{entry.title}</TextLink>
                         <Paragraph>{entry.previewBody}</Paragraph>
                     </Typography>
-                    <img
-                        src={entry.imageUrl}
-                        alt=""
-                        style={{ width: '200px' }}
-                    />
-                </Card>
-            </div>
+                    <img src={entry.imageUrl} alt="" style={{ width: '200px' }} />
+                </>}
+            </Card>
             <Button
-              buttonType="muted"
-              onClick={() => props.sdk.navigator.openEntry(entry.id)}
-              style={{marginTop: tokens.spacingXl}}
+                buttonType="muted"
+                disabled={!entry}
+                onClick={() => props.sdk.navigator.openEntry(entry!.id)}
+                style={{ margin: `${tokens.spacingXl} 0` }}
             >
                 Back to entry
             </Button>
+            <div style={{ justifyContent: 'center' }}>
+                <SkeletonContainer>
+                    <SkeletonDisplayText numberOfLines={1} />
+                    <SkeletonBodyText numberOfLines={10} offsetTop={35} />
+                </SkeletonContainer>
+            </div>
         </div>
     );
 };
